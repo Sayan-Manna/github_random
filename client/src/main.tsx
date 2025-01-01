@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard.tsx";
 import Demo from "./pages/Demo.tsx";
 import { ThemeProvider } from "./components/theme-provider.tsx";
 import { SidebarProvider } from "./components/ui/sidebar.tsx";
+import POSRolloutIssueReporting from "./pages/POSRolloutIssueReporting.tsx";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
       },
       {
         path: "ticket",
-        element: <Demo />,
+        element: <POSRolloutIssueReporting />,
       },
     ],
   },
