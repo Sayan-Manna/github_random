@@ -92,7 +92,7 @@ export default function CompactOperationalPOSMachines() {
   };
 
   return (
-    <Card className="w-full h-[300px] overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+    <Card className=" w-full h-[300px] overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
       <CardContent className="p-2">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">

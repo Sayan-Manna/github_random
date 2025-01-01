@@ -33,7 +33,7 @@ const PageHeader = () => {
   }, [pathname]);
 
   return (
-    <header className=" flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 w-full">
+    <header className=" sticky border-b border-b-gray-900 top-0 z-20 backdrop-filter backdrop-blur  flex h-14 mb-2 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 w-full">
       <div className="flex items-center gap-2 px-4">
         <SidebarTrigger className="-ml-1" />
         <Separator orientation="vertical" className="mr-2 h-4" />

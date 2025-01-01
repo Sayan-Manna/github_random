@@ -2,6 +2,7 @@ import PageHeader from "@/components/PageHeader";
 import CompactOperationalPOSMachines from "@/components/pos-operational-chart";
 import POSDataReflectionChecker from "@/components/pos-promotion-reflection-chart";
 import PriorityTicketMeter from "@/components/priorityTicketsMeter";
+import Demo from "./Demo";
 
 export default function Dashboard() {
   return (
@@ -19,7 +20,9 @@ export default function Dashboard() {
             <PriorityTicketMeter />
           </div>
         </div>
-        <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
+        <div className="grid auto-rows-min gap-4 md:grid-cols-1">
+          <Demo />
+        </div>
       </div>
     </div>
   );
