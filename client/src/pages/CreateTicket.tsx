@@ -22,6 +22,7 @@ import { Badge } from "@/components/ui/badge";
 import { AlertCircle, CheckCircle, Upload } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { motion } from "framer-motion";
+import PageHeader from "@/components/PageHeader";
 
 type Priority = "Low" | "Medium" | "High";
 
@@ -132,7 +133,8 @@ export default function CreateTicket() {
   }
 
   return (
-    <div className="min-h-screen w-full p-4">
+    <div className="page-container  w-full">
+      <PageHeader />
       <motion.div
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
