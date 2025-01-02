@@ -108,7 +108,7 @@
     rgba(99, 75, 18, 1) 0%,
     rgba(0, 0, 0, 1) 80%
   );
-  animation: glowingEffect 1s ease-in-out;
+  /* animation: glowingEffect 1s ease-in-out; */
   position: absolute;
   inset: 0;
   filter: blur(10px);

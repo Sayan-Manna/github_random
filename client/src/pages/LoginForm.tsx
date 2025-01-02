@@ -28,8 +28,8 @@ export function LoginForm({
     <div className={cn("card-wrapper", className)} {...props}>
       <div className="glow-background" />
       <div className="card-container">
-        <Card className="overflow-hidden">
-          <CardContent className="grid p-0 md:grid-cols-2 w-[70vw] h-[40vh]">
+        <Card className=" overflow-hidden">
+          <CardContent className="grid p-0 md:grid-cols-2 !min-w-[40vw] !h-[50vh]">
             <form
               className="p-6 md:p-8"
               onSubmit={handleSubmit(onSubmit)}
