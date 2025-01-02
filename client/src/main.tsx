@@ -5,11 +5,12 @@ import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Layout from "./Layout.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
-import Demo from "./pages/Demo.tsx";
 import { ThemeProvider } from "./components/theme-provider.tsx";
 import { SidebarProvider } from "./components/ui/sidebar.tsx";
 import POSRolloutIssueReporting from "./pages/POSRolloutIssueReporting.tsx";
 import CreateTicket from "./pages/CreateTicket.tsx";
+import Feedback from "./pages/Feedback.tsx";
+import { LoginForm } from "./pages/LoginForm.tsx";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,15 @@ const router = createBrowserRouter([
         path: "service",
         element: <CreateTicket />,
       },
+      {
+        path: "feedback",
+        element: <Feedback />,
+      },
     ],
+  },
+  {
+    path: "/sign-in",
+    element: <LoginForm />,
   },
 ]);
 

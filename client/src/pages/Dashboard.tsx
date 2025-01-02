@@ -2,7 +2,7 @@ import PageHeader from "@/components/PageHeader";
 import CompactOperationalPOSMachines from "@/components/pos-operational-chart";
 import POSDataReflectionChecker from "@/components/pos-promotion-reflection-chart";
 import PriorityTicketMeter from "@/components/priorityTicketsMeter";
-import Demo from "./Demo";
+import Demo from "../components/Demo";
 
 export default function Dashboard() {
   return (
