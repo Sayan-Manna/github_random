@@ -5,7 +5,6 @@ const { isAuthenticated, isAdmin } = require("../middleware/auth.middleware");
 
 router.post("/", isAdmin, userController.createUser);
 router.get("/", isAdmin, userController.getAllUsers);
-router.get("/:id", isAuthenticated, userController.getUserById);
-router.put("/:id", isAdmin, userController.updateUser);
+router.put("/role", isAdmin, userController.updateUserRole);
 
 module.exports = router;

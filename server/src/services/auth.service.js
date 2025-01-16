@@ -7,8 +7,11 @@ const Role = db.roles;
 class AuthService {
   async createAdmin() {
     const adminRole = await Role.findOrCreate({
-      where: { name: "admin" },
-      defaults: { name: "admin" },
+      where: { name: "Admin" },
+      defaults: {
+        name: "Admin",
+        description: "System administrator with user management privileges",
+      },
     });
 
     const hashedPassword = await bcrypt.hash("admin123", 10);
@@ -22,18 +25,20 @@ class AuthService {
     });
   }
 
-  async createUser(userData, creatorId) {
-    const creator = await User.findByPk(creatorId);
-    if (!creator) throw new Error("Creator not found");
+  async createUser(userData) {
+    const role = await Role.findByPk(userData.roleId);
+    if (!role) {
+      throw new Error("Invalid role specified");
+    }
 
-    const userRole = await Role.findOne({ where: { name: "user" } });
-    const hashedPassword = await bcrypt.hash(userData.password, 10);
+    const hashedPassword = await bcrypt.hash("password123", 10);
 
     return User.create({
-      ...userData,
+      username: userData.username,
+      email: userData.email,
       password: hashedPassword,
-      roleId: userRole.id,
-      supervisorId: userData.supervisorId || null,
+      roleId: userData.roleId,
+      isFirstLogin: true,
     });
   }
 
@@ -79,25 +84,6 @@ class AuthService {
     await user.save();
 
     return resetToken;
-  }
-
-  async resetPasswordWithToken(token, newPassword) {
-    const user = await User.findOne({
-      where: {
-        resetToken: token,
-        resetTokenExpiry: { [db.Sequelize.Op.gt]: new Date() },
-      },
-    });
-
-    if (!user) throw new Error("Invalid or expired token");
-
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-    user.password = hashedPassword;
-    user.resetToken = null;
-    user.resetTokenExpiry = null;
-    await user.save();
-
-    return user;
   }
 }
 

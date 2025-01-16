@@ -18,12 +18,21 @@ db.sequelize = sequelize;
 
 db.users = require("./user")(sequelize, Sequelize);
 db.roles = require("./role")(sequelize, Sequelize);
+db.stores = require("./store")(sequelize, Sequelize);
+db.pos_machines = require("./pos_machine")(sequelize, Sequelize);
 
 // Define relationships
 db.roles.hasMany(db.users);
 db.users.belongsTo(db.roles);
 
-db.users.hasMany(db.users, { as: "subordinates", foreignKey: "supervisorId" });
-db.users.belongsTo(db.users, { as: "supervisor", foreignKey: "supervisorId" });
+// Store and POS Machine relationships
+db.stores.hasMany(db.pos_machines, {
+  foreignKey: "store_id",
+  sourceKey: "store_id",
+});
+db.pos_machines.belongsTo(db.stores, {
+  foreignKey: "store_id",
+  targetKey: "store_id",
+});
 
 module.exports = db;

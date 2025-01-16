@@ -9,6 +9,13 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: false,
       unique: true,
+      validate: {
+        isIn: [["Admin", "Technician", "Deployment Manager"]],
+      },
+    },
+    description: {
+      type: Sequelize.STRING,
+      allowNull: true,
     },
   });
 };

@@ -4,7 +4,20 @@ const db = require("../models");
 class UserController {
   async createUser(req, res) {
     try {
-      const user = await authService.createUser(req.body, req.session.userId);
+      const { username, email, roleId } = req.body;
+
+      if (!username || !email || !roleId) {
+        return res.status(400).json({
+          message: "Username, email, and role are required",
+        });
+      }
+
+      const user = await authService.createUser({
+        username,
+        email,
+        roleId,
+      });
+
       res.json({
         message: "User created successfully",
         user: {
@@ -12,7 +25,6 @@ class UserController {
           username: user.username,
           email: user.email,
           roleId: user.roleId,
-          supervisorId: user.supervisorId,
         },
       });
     } catch (error) {
@@ -23,16 +35,11 @@ class UserController {
   async getAllUsers(req, res) {
     try {
       const users = await db.users.findAll({
-        attributes: ["id", "username", "email", "roleId", "supervisorId"],
+        attributes: ["id", "username", "email"],
         include: [
           {
             model: db.roles,
-            attributes: ["name"],
-          },
-          {
-            model: db.users,
-            as: "supervisor",
-            attributes: ["username"],
+            attributes: ["name", "description"],
           },
         ],
       });
@@ -42,55 +49,28 @@ class UserController {
     }
   }
 
-  async getUserById(req, res) {
+  async updateUserRole(req, res) {
     try {
-      const user = await db.users.findByPk(req.params.id, {
-        attributes: ["id", "username", "email", "roleId", "supervisorId"],
-        include: [
-          {
-            model: db.roles,
-            attributes: ["name"],
-          },
-          {
-            model: db.users,
-            as: "supervisor",
-            attributes: ["username"],
-          },
-          {
-            model: db.users,
-            as: "subordinates",
-            attributes: ["id", "username", "email"],
-          },
-        ],
-      });
+      const { userId, roleId } = req.body;
 
+      const user = await db.users.findByPk(userId);
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
 
-      res.json(user);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  }
-
-  async updateUser(req, res) {
-    try {
-      const user = await db.users.findByPk(req.params.id);
-
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
+      const role = await db.roles.findByPk(roleId);
+      if (!role) {
+        return res.status(404).json({ message: "Role not found" });
       }
 
-      const updatedUser = await user.update(req.body);
+      await user.update({ roleId });
+
       res.json({
-        message: "User updated successfully",
+        message: "User role updated successfully",
         user: {
-          id: updatedUser.id,
-          username: updatedUser.username,
-          email: updatedUser.email,
-          roleId: updatedUser.roleId,
-          supervisorId: updatedUser.supervisorId,
+          id: user.id,
+          username: user.username,
+          roleId: user.roleId,
         },
       });
     } catch (error) {

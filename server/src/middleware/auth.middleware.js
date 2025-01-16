@@ -10,19 +10,19 @@ module.exports = {
   },
 
   isAdmin: async (req, res, next) => {
-    if (!req.session || !req.session.userId) {
-      return res.status(401).json({ message: "Unauthorized" });
-    }
+    try {
+      const user = await db.users.findOne({
+        where: { id: req.session.userId },
+        include: [{ model: db.roles }],
+      });
 
-    const user = await db.users.findOne({
-      where: { id: req.session.userId },
-      include: [{ model: db.roles }],
-    });
-
-    if (user && user.role.name === "admin") {
-      next();
-    } else {
-      res.status(403).json({ message: "Forbidden" });
+      if (user && user.role.name === "Admin") {
+        next();
+      } else {
+        res.status(403).json({ message: "Admin access required" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Error checking admin rights" });
     }
   },
 };

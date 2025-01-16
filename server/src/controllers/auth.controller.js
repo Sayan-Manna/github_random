@@ -42,18 +42,7 @@ class AuthController {
     try {
       const { email } = req.body;
       const resetToken = await authService.forgotPassword(email);
-      // In a real application, you would send this token via email
       res.json({ message: "Password reset token generated", resetToken });
-    } catch (error) {
-      res.status(400).json({ message: error.message });
-    }
-  }
-
-  async resetPasswordWithToken(req, res) {
-    try {
-      const { token, newPassword } = req.body;
-      await authService.resetPasswordWithToken(token, newPassword);
-      res.json({ message: "Password reset successful" });
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
